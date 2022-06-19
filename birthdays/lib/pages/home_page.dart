@@ -46,23 +46,28 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> checkAndShowNotification() async {
     var currdate = DateTime.now();
-    for (int i = 0; i < person.length; i++) {
-      var Dob = DateTime.parse(person[i].dob);
-      if ((Dob.month == currdate.month) && (Dob.day == currdate.day)) {
-        debugPrint(currdate.toString() + '  ' + Dob.toString());
-        _showNotification();
-        print("yes");
+
+    Future.delayed(Duration(seconds: 1), () {
+      print(person.length);
+      for (int i = 0; i < person.length; i++) {
+        var Dob = DateTime.parse(person[i].dob);
+        if ((Dob.month == currdate.month) && (Dob.day == currdate.day)) {
+          debugPrint(currdate.toString() + '  ' + Dob.toString());
+          _showNotification();
+          print("yes");
+        }
       }
-    }
+    });
   }
-  addSearchList(DateTime searchdate){
+
+  addSearchList(DateTime searchdate) {
     sperson = [];
-    for(int i = 0;i < person.length;i++){
-      if(DateTime.parse(person[i].dob).month == searchdate.month){
+    for (int i = 0; i < person.length; i++) {
+      if (DateTime.parse(person[i].dob).month == searchdate.month) {
         sperson.add(person[i]);
       }
     }
-    setState(() {}); 
+    setState(() {});
   }
 
   //////////////////////////////////
@@ -143,7 +148,7 @@ class _HomePageState extends State<HomePage> {
   //
   Future _showNotification() async {
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
-        'your channel id', 'your channel name',
+        'channel id', 'channel name',
         importance: Importance.max, priority: Priority.high);
     var iOSPlatformChannelSpecifics = const IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(
@@ -239,7 +244,6 @@ class _HomePageState extends State<HomePage> {
                     setState(() {});
                   },
                 ),
-                
                 InkWell(
                   child: const Icon(
                     Icons.delete,
@@ -366,7 +370,6 @@ class _HomePageState extends State<HomePage> {
                                     });
                               }
                             },
-                            
                           ).px16().py8(),
                           GestureDetector(
                             child: ClipRRect(
@@ -386,14 +389,14 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ).p16(),
                             onTap: () async {
-              
                               addSearchList(DateTime.parse(dob));
                               Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => SearchPage(sperson: sperson,)
-                        )
-                    );
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          SearchPage(
+                                            sperson: sperson,
+                                          )));
                             },
                           )
                         ],

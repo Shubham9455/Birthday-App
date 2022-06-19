@@ -11,4 +11,9 @@ A Flutter app to help you remembering your loved one's Birth Dates.
 
 3. You can search/filter the list with months in which they have their birthdays.
 
-4. 
+
+
+
+
+## Made By
+### Shubham Jaiswal

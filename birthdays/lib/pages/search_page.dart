@@ -43,13 +43,13 @@ class SearchPage extends StatelessWidget {
             "Search Results".text.xl5.bold.make(),
             /////////////////////////////////
             /// List View To Show Data
-            ///
+            ///                                                                 
             Expanded(
               child: VxArc(
                 height: 15,
-                edge: VxEdge.TOP,
+                edge: VxEdge.TOP,                                                                                                         
                 arcType: VxArcType.CONVEY,
-                child: Container(
+                child: Container(                                                                                                                                                                         
                   color: Colors.white,
                   height: 300,
                   child: ListView(

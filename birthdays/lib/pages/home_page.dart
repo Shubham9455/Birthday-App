@@ -1,6 +1,7 @@
 // ignore_for_file: unrelated_type_equality_checks, depend_on_referenced_packages
 
 import 'dart:ui';
+import 'package:birthdays/pages/search_page.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:birthdays/models/profiles.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,6 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool addtapped = false;
+  bool searchtapped = false;
   bool deletetapped = false;
   String dob = "";
   bool edittapped = false;
@@ -26,6 +28,7 @@ class _HomePageState extends State<HomePage> {
   final myController = TextEditingController();
   String name = "";
   List<Persons> person = [];
+  List<Persons> sperson = [];
 
   @override
   void initState() {
@@ -51,6 +54,15 @@ class _HomePageState extends State<HomePage> {
         print("yes");
       }
     }
+  }
+  addSearchList(DateTime searchdate){
+    sperson = [];
+    for(int i = 0;i < person.length;i++){
+      if(DateTime.parse(person[i].dob).month == searchdate.month){
+        sperson.add(person[i]);
+      }
+    }
+    setState(() {}); 
   }
 
   //////////////////////////////////
@@ -187,6 +199,20 @@ class _HomePageState extends State<HomePage> {
               children: [
                 InkWell(
                   child: const Icon(
+                    CupertinoIcons.home,
+                    color: Colors.white,
+                    size: 20,
+                  ).px24().py12(),
+                  onTap: () {
+                    addtapped = false;
+                    edittapped = false;
+                    deletetapped = false;
+                    searchtapped = false;
+                    setState(() {});
+                  },
+                ),
+                InkWell(
+                  child: const Icon(
                     CupertinoIcons.add_circled,
                     color: Colors.white,
                     size: 20,
@@ -195,6 +221,7 @@ class _HomePageState extends State<HomePage> {
                     addtapped = addtapped ? false : true;
                     edittapped = false;
                     deletetapped = false;
+                    searchtapped = false;
                     setState(() {});
                   },
                 ),
@@ -208,9 +235,11 @@ class _HomePageState extends State<HomePage> {
                     edittapped = edittapped ? false : true;
                     addtapped = false;
                     deletetapped = false;
+                    searchtapped = false;
                     setState(() {});
                   },
                 ),
+                
                 InkWell(
                   child: const Icon(
                     Icons.delete,
@@ -220,6 +249,21 @@ class _HomePageState extends State<HomePage> {
                   onTap: () {
                     deletetapped = deletetapped ? false : true;
                     addtapped = false;
+                    edittapped = false;
+                    searchtapped = false;
+                    setState(() {});
+                  },
+                ),
+                InkWell(
+                  child: const Icon(
+                    Icons.search,
+                    color: Colors.white,
+                    size: 20,
+                  ).px24(),
+                  onTap: () {
+                    searchtapped = searchtapped ? false : true;
+                    addtapped = false;
+                    deletetapped = false;
                     edittapped = false;
                     setState(() {});
                   },
@@ -279,6 +323,77 @@ class _HomePageState extends State<HomePage> {
                             onTap: () async {
                               deleteperson(id);
                               await getList();
+                            },
+                          )
+                        ],
+                      ),
+                    )
+                  : Container(),
+            ),
+            ///////////////////////
+            ///For Search
+            ///
+            Container(
+              child: searchtapped
+                  ? SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              constraints:
+                                  BoxConstraints(maxHeight: 20, maxWidth: 250),
+                              icon: Icon(
+                                CupertinoIcons.search,
+                                size: 20,
+                              ),
+                              // alignLabelWithHint: true,
+                              labelText: "Choose Any Day Of That Month",
+                            ),
+                            controller: myController,
+                            onTap: () async {
+                              DateTime? date = DateTime(1900);
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              date = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(1980),
+                                  lastDate: DateTime.now());
+                              if (date != null) {
+                                setState(() => {
+                                      dob = date.toString(),
+                                      myController.text = date.toString()
+                                    });
+                              }
+                            },
+                            
+                          ).px16().py8(),
+                          GestureDetector(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Container(
+                                color: Colors.red,
+                                height: 30,
+                                width: 100,
+                                child: const Center(
+                                  child: Text(
+                                    "Search",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            ).p16(),
+                            onTap: () async {
+              
+                              addSearchList(DateTime.parse(dob));
+                              Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => SearchPage(sperson: sperson,)
+                        )
+                    );
                             },
                           )
                         ],

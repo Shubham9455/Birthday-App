@@ -1,16 +1,14 @@
-# birthdays
+# Birthdays
 
-A new Flutter project.
+A Flutter app to help you remembering your loved one's Birth Dates.
 
-## Getting Started
+## Features:
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+1. You Can Add Edit, or delete birthdate of a person.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+2. You will get a notification if you open the app on the day on which any of your added person have their birthday.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+3. You can search/filter the list with months in which they have their birthdays.
+
+4. 
